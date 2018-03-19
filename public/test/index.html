@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>机房管理首页</title>
+    <script type="text/javascript" src="js/mui.min.js"></script>
+    <link rel="stylesheet" href="css/mui.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="css/public.css" />
+    <link rel="stylesheet" type="text/css" href="lib/swiper.min.css">
+    <style type="text/css">
+    	.mui-content li.mui-media.mui-table-view-cell{
+    		background-color: #fefefe;
+    	}
+    </style>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav" style="position: relative; background-color: #21a4de; height: 48px">
+        <a href="system.html" style="position: absolute; top: 50%; right: 25px; transform: translateY(-11px);">
+            <img src="img/xitong shezhitubiao-01.png" style="width: 17px; height: 17px" alt="">
+        </a>
+        <h1 class="mui-title" style="color: #fefefe; font-size: 18px;">机房管理系统</h1>
+    </header>
+    <div class="swiper-container" style="">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <a href="alarmchart.html">
+                    <img src="./img/banner 1-01.png" width="100%" alt="当前告警饼图">
+                </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="latestAlarm.html">
+                    <img src="./img/banner 2-01.png" width="100%" alt="最近一周告警">
+                </a>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div style="margin-bottom: 5px;background-color: #fefefe; height:27px;"></div>
+    <div class="mui-content" style="padding: 0; background-color: #fefefe;">
+        <!--栅格化-->
+        <ul class="mui-table-view mui-grid-view mui-grid-9" style="margin: 0;">
+            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3">
+                <a href="Asset.html">
+                    <img src="img/zichansousuo-01.png" width="60%" alt="">
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3">
+                <a href="alarm.html">
+                    <img src="img/gaojingguanli-01.png" width="60%" alt="">
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3">
+                <a href="equipment-upload.html">
+                    <img src="img/shebeishangjia-01.png" width="60%" alt="">
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-3">
+                <a href="equipment-download.html">
+                    <img src="img/shebeixiajia-01.png" width="60%" alt="">
+                </a>
+            </li>
+        </ul>
+        <nav class="mui-bar mui-bar-tab tab" style=" background-color: #21a4de;">
+            <a class="mui-tab-item" href="Asset.html">
+                <span class="mui-icon">
+                    <img src="img/zichan weixuanzhong-01.png" alt="">
+                </span>
+                <span class="mui-tab-label">资产搜索</span>
+            </a>
+            <a class="mui-tab-item" href="alarm.html">
+                <span class="mui-icon">
+                    <img src="img/gaojing-01.png" alt="">
+                </span>
+                <span class="mui-tab-label">告警管理</span>
+            </a>
+            <a class="mui-tab-item" href="index.html">
+                <span class="mui-icon" style="position: absolute; top: -20px; background-color: #21a4de; width: 50px; height: 50px; transform: translateX(-50%); border-radius: 25px; padding-top: 9px;">
+                    <img src="img/shouye-01.png" width="32px" alt="">
+                </span>
+                <span class="mui-tab-label" style="padding-top: 25px">首页</span>
+            </a>
+            <a class="mui-tab-item" href="equipment-upload.html">
+                <span class="mui-icon">
+                    <img src="img/xiangshagn anniu-01.png" alt="">
+                </span>
+                <span class="mui-tab-label">设备上架</span>
+            </a>
+            <a class="mui-tab-item" href="equipment-download.html">
+                <span class="mui-icon">
+                    <img src="img/xiangxia anniu-01.png" alt="">
+                </span>
+                <span class="mui-tab-label">设备下架</span>
+            </a>
+        </nav>
+    </div>
+    <script type="text/javascript" src="lib/swiper.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    $(function() {
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            autoplay: 1000,
+            autoplayDisableOnInteraction: false
+        });
+        var storage = window.localStorage;
+        var url = storage.url;
+        $.ajax({
+            type: 'post',
+            url: "http://" + url + "/api/alarm/searchAndCount",
+            async: 'true',
+            dataType: 'json',
+            success: function(data) {
+                $(".alarmCount").html(data.value.count);
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>
