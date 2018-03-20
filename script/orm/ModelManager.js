@@ -64,6 +64,9 @@ exports.getModel = function (name) {
     return modelMap[name];
 };
 
+/**
+ * 添加model
+ */
 exports.initModels = function () {
     var force = config.syncForce;
     var self = this;
