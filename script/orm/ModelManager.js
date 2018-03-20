@@ -1,15 +1,11 @@
 var sequelize = "sequelize";
 var Sequelize = require(sequelize);
-var config = require("../config");
-
-var Data = require('./Data.js');
-
 var Promise = require("bluebird");
 
-var config = require('../config.js');
+var config = require("../config");
+var Data = require('./Data.js');
+
 var modelMap = {}; // 管理模型库
-
-
 var starting = true;
 
 exports.setSequelize = function (sequelize) {

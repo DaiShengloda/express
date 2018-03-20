@@ -2,13 +2,9 @@ var Model = require('./Model');
 var co = require('co');
 Model = Model.Model;
 var ModelManager = require('./ModelManager');
-// var logger = require('../Logger');
 var Promise = require('bluebird');
 var Sequelize = require("sequelize");
 var util = require('../util');
-// var cron = require('../cron');
-// var nodeUtil = require('util');
-// var initData = require('./InitData.js');
 var name = "data";
 var attributes = {
     ii: {
