@@ -70,9 +70,10 @@ var attributes = {
         searchable: true,
         ref: 'business_type'
     },
-    power: {
-        type: Sequelize.DECIMAL(8, 4),
-        defaultValue: 0.00
+    weight: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
     },
     extend: {
         type: Sequelize.STRING,

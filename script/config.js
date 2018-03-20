@@ -12,13 +12,7 @@ module.exports = {
         port: 3306,
         user: 'root',
         password: 'root',
-        // database: 'itv_new_theme', 
-        // database: 'itv_fjgd',
         database: 'itv_per_test',
-        // database: 'itv_gxx', 
-        // database: 'itv_gztb', 
-        // database: 'itv_store',
-        // database: 'itv_szsmr',
         tableCharset: 'utf-8',   
         debug: ['ComQueryPacket'],
         pool: {
@@ -28,5 +22,4 @@ module.exports = {
         },
     },
     show_sql:true,
-    syncForce: true,
 };

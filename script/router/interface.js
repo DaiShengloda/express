@@ -17,7 +17,6 @@ module.exports = function(app) {
 		}).then(function (result) {
 			res.json({ value: result, error: null });
 		}).catch(function (err) {
-			logger.error(err);
 			res.json({ value: null, error: err.message });
 		});
 	});
