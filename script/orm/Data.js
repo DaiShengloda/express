@@ -98,22 +98,23 @@ Data.prototype.add = function(param,t){
 
     var dataTypeId = param.dataTypeId;
     console.log(param);
-    var datatypeModel = ModelManager.getModel('datatype');
-    return datatypeModel.get({id:dataTypeId}).then(function(datatype){
-        if(datatype == null){
-            return Promise.reject("DataType '" + dataTypeId + "' dose not exist");
-        }
-        datatype = datatype.dataValues;
-        var categoryId = datatype.categoryId;
-        var count = global["count." + categoryId],licenseCount = global["licenseCount." + categoryId] ;
-        if(count != null && licenseCount !=null){
-              if(count +1 > licenseCount){
-                return Promise.reject("License error : count for '" + categoryId + "' " + (count+1)+" > license count " + licenseCount);
-              }
-        }
-        cron.ql();
-        return Model.prototype.add.call(self,param,t);
-    });
+    return Model.prototype.add.call(self,param,t);
+    // var datatypeModel = ModelManager.getModel('datatype');
+    // return datatypeModel.get({id:dataTypeId}).then(function(datatype){
+    //     if(datatype == null){
+    //         return Promise.reject("DataType '" + dataTypeId + "' dose not exist");
+    //     }
+    //     datatype = datatype.dataValues;
+    //     var categoryId = datatype.categoryId;
+    //     var count = global["count." + categoryId],licenseCount = global["licenseCount." + categoryId] ;
+    //     if(count != null && licenseCount !=null){
+    //           if(count +1 > licenseCount){
+    //             return Promise.reject("License error : count for '" + categoryId + "' " + (count+1)+" > license count " + licenseCount);
+    //           }
+    //     }
+    //     cron.ql();
+    //     return Model.prototype.add.call(self,param,t);
+    // });
 };
 /**
  * 重新缓存机柜等数量,需要调用cron.ql方法。
@@ -181,6 +182,16 @@ Data.prototype.searchAndCount = function(param, t) {
         }
         return this.orm.findAndCountAll(data, t);
     }
+};
+
+Data.prototype.getKeyData = function(data) {
+
+    if (data.ii !== undefined) {
+        return { ii: data.ii };
+    } else if (data.id !== undefined) {
+        return { id: data.id };
+    }
+    return { id: null };
 };
 
 exports.Model = Data;

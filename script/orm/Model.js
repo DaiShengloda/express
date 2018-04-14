@@ -4,7 +4,8 @@ var ModelManager = require('./ModelManager.js');
 var Promise = require('bluebird');
 var co = require('co');
 var util = require('../util');
-
+var eventBus = require('../EventBus.js');
+ 
 var Model = function(name, attributes, options, description, element) {
     initModel(this, name, attributes, options, description, element);
 };
@@ -130,9 +131,9 @@ Model.prototype.add = function(data, t, user) {
                     .then(function(d) {
                         d = d.dataValues;
                         self.orm.build(d, {});
-                        util.runDelayTask('refreshCache-' + self.name, 1000, function() {
-                            self.refreshCache();
-                        });
+                        // util.runDelayTask('refreshCache-' + self.name, 1000, function() {
+                        //     self.refreshCache();
+                        // });
                         eventBus.emit('model.' + self.name, { method: 'add', result: d });
                         if (!ModelManager.isLog(self)) {
                             return Promise.resolve(d);
@@ -307,6 +308,20 @@ Model.prototype.decode = function(value, name, values) {
         logger.error('decode:' + name + '转换成json失败  - ' + JSON.stringify(e) + '  value=' + value, values)
     }
     return value;
+};
+Model.prototype.getKeyData = function(data) {
+    var attributes = this.attributes;
+    var keyData = {};
+    Object.keys(attributes).forEach(function(key) {
+        var attribute = attributes[key]
+        if (attribute.primaryKey) {
+            keyData[key] = data[key];
+        }
+    });
+    if (Object.keys(keyData).length == 0) {
+        keyData.id = null;
+    }
+    return keyData;
 };
 
 exports.Sequelize = Sequelize;
